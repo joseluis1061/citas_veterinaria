@@ -8,6 +8,12 @@ const Formulario = ({pacientes, setPacientes, AlertaError}) => {
     const [fecha, setFecha] = useState('');
     const [sintomas, setSintomas] = useState('');
 
+    const setId = () => {
+        const fecha = Date.now().toString(36);
+        const random = Math.random().toString(36).substring(2);
+        return fecha+random
+    }
+
     //Error
     const [error, setError] = useState(false);
 
@@ -27,7 +33,8 @@ const Formulario = ({pacientes, setPacientes, AlertaError}) => {
             propietario,
             email,
             fecha, 
-            sintomas
+            sintomas,
+            id: setId()
         };
         //Guardo la información en el array de pacientes
         setPacientes([...pacientes, nuevoPaciente]);
@@ -38,6 +45,7 @@ const Formulario = ({pacientes, setPacientes, AlertaError}) => {
         setEmail('');
         setFecha('');
         setSintomas('');
+
     };
 
     return ( 

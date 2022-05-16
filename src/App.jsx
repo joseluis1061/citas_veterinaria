@@ -6,8 +6,10 @@ import { useState } from "react"
 
 function App() {
   //Props de la API
-  const [pacientes, setPacientes] = useState([])
-
+  //1. Información de pacientes
+  const [pacientes, setPacientes] = useState([]);
+  //2. Información de un paciente para editarlo
+  const [paciente, setPaciente] = useState({});
 
   return (
     <div className="container mx-auto mt-20">
@@ -20,6 +22,7 @@ function App() {
         />
         <ListadoPacientes
           pacientes = {pacientes}
+          setPaciente = {setPaciente}
         />
       </div>
     </div>
