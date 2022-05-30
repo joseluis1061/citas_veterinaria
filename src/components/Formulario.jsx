@@ -1,12 +1,24 @@
 import {useState, useEffect} from "react";
 import {Error} from "./Error";
 
-const Formulario = ({pacientes, setPacientes, AlertaError}) => {
+const Formulario = ({pacientes, setPacientes, paciente}) => {
+
     const [nombre, setNombre] = useState('');
     const [propietario, setPropietario] = useState('');
     const [email, setEmail] = useState('');
     const [fecha, setFecha] = useState('');
     const [sintomas, setSintomas] = useState('');
+
+    useEffect(()=>{
+        if(Object.keys(paciente).length>0){
+            setNombre(paciente.nombre);
+            setPropietario(paciente.propietario);
+            setEmail(paciente.email);
+            setFecha(paciente.fecha);
+            setSintomas(paciente.sintomas);
+        }
+    },[paciente]);
+
 
     const setId = () => {
         const fecha = Date.now().toString(36);
@@ -14,7 +26,7 @@ const Formulario = ({pacientes, setPacientes, AlertaError}) => {
         return fecha+random
     }
 
-    //Error
+    //Error de formulario
     const [error, setError] = useState(false);
 
     const handleSubmit = (e)=>{
@@ -34,10 +46,24 @@ const Formulario = ({pacientes, setPacientes, AlertaError}) => {
             email,
             fecha, 
             sintomas,
-            id: setId()
         };
-        //Guardo la información en el array de pacientes
-        setPacientes([...pacientes, nuevoPaciente]);
+
+        //Para editar un paciente
+        if(paciente.id){
+            console.log("Editando...")
+            // const pacientesEditados = pacientes.map((pacienteStore)=>{
+            //     return paciente.id === pacienteStore.id
+            // });
+            console.log(`Paciente editado \n ${pacientesEditados}`)
+
+        }
+        //Para agregar un nuevo paciente
+        else{
+            //Guardo la información en el array de pacientes
+            nuevoPaciente['id'] = setId(); //Agrega un id
+            setPacientes([...pacientes, nuevoPaciente]);
+        }
+        
 
         //Reiniciar un formulario
         setNombre('');
@@ -60,9 +86,10 @@ const Formulario = ({pacientes, setPacientes, AlertaError}) => {
                 Administralos
             </span>
         </p>
-        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg py-10 px-5 mb-10">
-     
-            {error && 
+        <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg py-10 px-5 mb-10">     
+            
+            {/*EN caso de error */
+            error && 
                 <Error> 
                     <p>Todos los campos son obligatorios</p>
                 </Error>
@@ -139,7 +166,7 @@ const Formulario = ({pacientes, setPacientes, AlertaError}) => {
             <input type="submit" 
                 className="bg-indigo-600 p-3 w-full text-white font-bold
                 hover:bg-indigo-700 cursor-pointer transition-all"
-                value="Agregar Paciente"
+                value={paciente.id? "Editar paciente": "Agregar Paciente"}
            />
            
         </form>

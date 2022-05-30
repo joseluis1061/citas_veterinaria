@@ -1,7 +1,5 @@
 const Paciente = ({paciente, setPaciente}) => {
-  console.log('Paciente');
-  console.log(paciente)
-
+  
   const {nombre, propietario, email, fecha, sintomas} = paciente
   return (
     
@@ -39,10 +37,12 @@ const Paciente = ({paciente, setPaciente}) => {
         rounder-lg
         w-full
         lg:w-auto"  
-        onClick={()=> setPaciente(paciente)} 
+        // Detecta el evento y le el estado del objeto paciente
+        onClick={()=> setPaciente(paciente)}
       >
         Editar
       </button>
+  
 
       <button type="button"
         className="py-2
