@@ -19,8 +19,7 @@ const ListadoPacientes = ({pacientes, setPaciente}) => {
             return <Paciente 
             key ={paciente.id} 
             paciente={paciente}
-            setPaciente = {setPaciente}/> 
-            
+            setPaciente = {setPaciente}/>            
           })}     
          </>
         ):(

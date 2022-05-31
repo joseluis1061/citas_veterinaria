@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import {Error} from "./Error";
 
-const Formulario = ({pacientes, setPacientes, paciente}) => {
+const Formulario = ({pacientes,setPacientes,paciente,setPaciente}) => {
 
     const [nombre, setNombre] = useState('');
     const [propietario, setPropietario] = useState('');
@@ -40,38 +40,35 @@ const Formulario = ({pacientes, setPacientes, paciente}) => {
         setError(false);
 
         //Capturo información de paciente
-        const nuevoPaciente = {
+        const objetoPaciente = {
             nombre, 
-            propietario,
-            email,
+            propietario, 
+            email, 
             fecha, 
-            sintomas,
-        };
-
+            sintomas
+        }
+        
         //Para editar un paciente
-        if(paciente.id){
-            console.log("Editando...")
-            // const pacientesEditados = pacientes.map((pacienteStore)=>{
-            //     return paciente.id === pacienteStore.id
-            // });
-            console.log(`Paciente editado \n ${pacientesEditados}`)
-
+        if(paciente.id){            
+            objetoPaciente.id = paciente.id
+            const pacientesActualizados = pacientes.map((pacienteState)=>
+                pacienteState.id === paciente.id ? objetoPaciente : pacienteState 
+            );
+            setPacientes(pacientesActualizados)
+            setPaciente({})
         }
         //Para agregar un nuevo paciente
         else{
             //Guardo la información en el array de pacientes
-            nuevoPaciente['id'] = setId(); //Agrega un id
-            setPacientes([...pacientes, nuevoPaciente]);
+            objetoPaciente['id'] = setId(); //Agrega un id
+            setPacientes([...pacientes, objetoPaciente]);
         }
-        
-
         //Reiniciar un formulario
         setNombre('');
         setPropietario('');
         setEmail('');
         setFecha('');
         setSintomas('');
-
     };
 
     return ( 

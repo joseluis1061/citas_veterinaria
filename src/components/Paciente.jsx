@@ -55,6 +55,8 @@ const Paciente = ({paciente, setPaciente}) => {
         rounder-lg
         w-full
         lg:w-auto" 
+        // Detecta el evento y le el estado del objeto paciente
+        onClick={()=> setPaciente(paciente)}
       >
         Eliminar
       </button>
