@@ -1,6 +1,14 @@
-const Paciente = ({paciente, setPaciente}) => {
+const Paciente = ({paciente, setPaciente, eliminarPaciente}) => {
   
-  const {nombre, propietario, email, fecha, sintomas} = paciente
+  const {nombre, propietario, email, fecha, sintomas, id} = paciente
+
+  const handleEliminar = () => {
+    const respuesta = confirm('Deseas eliminar este paciente? ');
+
+    if(respuesta) {
+        eliminarPaciente(id)
+    }
+  }
   return (
     
   <div className="mx-5 my-10 bg-white shadow-md px-5 py-10 rounded-xl">
@@ -56,7 +64,7 @@ const Paciente = ({paciente, setPaciente}) => {
         w-full
         lg:w-auto" 
         // Detecta el evento y le el estado del objeto paciente
-        onClick={()=> setPaciente(paciente)}
+        onClick={handleEliminar}
       >
         Eliminar
       </button>

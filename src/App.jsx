@@ -1,15 +1,37 @@
 import Header from "./components/Header"
 import Formulario from "./components/Formulario"
 import ListadoPacientes from "./components/ListadoPacientes"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 
 function App() {
   //Props de la API
-  //1. Información de pacientes
+  // Información de pacientes
   const [pacientes, setPacientes] = useState([]);
-  //2. Información de un paciente para editarlo
+  // Información de un paciente para editarlo
   const [paciente, setPaciente] = useState({});
+
+  // Traer información o inicialiazar el localStorage
+  useEffect(() => {
+    const obtenerLS = () => {
+      const pacientesLS = JSON.parse(localStorage.getItem('pacientes')) ?? [];
+      setPacientes(pacientesLS)
+    }
+    obtenerLS();
+  }, []);
+
+  // Actualizar el local Storage
+  useEffect(() => {
+    localStorage.setItem('pacientes', JSON.stringify( pacientes ));
+  }, [pacientes])
+
+
+  const eliminarPaciente=(id)=>{
+    const nuevosPacientes = pacientes.filter(pacienteState =>{            
+      return pacienteState.id != id
+    });
+    setPacientes(nuevosPacientes);
+  }
 
   return (
     <div className="container mx-auto mt-20">
@@ -25,6 +47,7 @@ function App() {
         <ListadoPacientes
           pacientes = {pacientes}
           setPaciente = {setPaciente}
+          eliminarPaciente = {eliminarPaciente}
         />
       </div>
     </div>
